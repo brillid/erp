@@ -2,12 +2,16 @@
 
 @section('content')
     <h1>Roles</h1>
-    <table>
+    <div class="mb-3">
+        <a href="{{ route('roles.create') }}" class="btn btn-primary">Create Role</a>
+    </div>
+    <table class="table">
         <thead>
             <tr>
                 <th>Name</th>
                 <th>Description</th>
                 <th>Permissions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -17,9 +21,19 @@
                     <td>{{ $role->description }}</td>
                     <td>
                         @foreach ($role->permissions as $permission)
-                            {{ $permission->name }}
-                            <br>
+                            {{ $permission->name }}<br>
                         @endforeach
+                    </td>
+                    <td>
+                        <form action="{{ route('roles.edit', $role) }}" method="GET" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                        </form>
+                        <form action="{{ route('roles.destroy', $role) }}" method="POST" style="display: inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this role?')">Delete</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach

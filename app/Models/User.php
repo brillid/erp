@@ -3,10 +3,14 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Role;
+use App\Http\Middleware\CheckPermission;
 
 class User extends Authenticatable
 {
@@ -23,29 +27,42 @@ class User extends Authenticatable
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-    ];
-
     public function roles()
     {
         return $this->belongsToMany(Role::class);
     }
 
+    public function assignRoleToUser(Request $request, $userId, $roleId)
+    {
+        $user = User::find($userId);
+        $role = Role::find($roleId);
+
+        if ($user && $role) {
+            $user->roles()->attach($role);
+            // Redirect or return a response as needed
+        } else {
+            // Handle error, e.g., user or role not found
+        }
+    }
+
+    public function checkUserRole(Request $request, $userId, $roleId)
+    {
+        $user = User::find($userId);
+
+        if ($user && $user->hasRole($roleId)) {
+            // User has the specified role
+        } else {
+            // User does not have the specified role
+        }
+    }
+
+    public function hasRole($roleId)
+    {
+        return $this->roles->contains('id', $roleId);
+    }
+
+    public function hasPermission($permission)
+    {
+        return $this->roles->flatMap->permissions->contains('name', $permission);
+    }
 }
