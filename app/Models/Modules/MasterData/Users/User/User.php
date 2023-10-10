@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Models\Modules\MasterData\Users\User;
+namespace App\Models\Modules\MasterData\Users;
 
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
