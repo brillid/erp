@@ -32,3 +32,7 @@ Auth::routes();
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 Route::get('master-data', [MasterDataController::class, 'index'])->name('master.data.index');
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('masterdata/products', 'Modules\MasterData\Products\ProductController')->except(['destroy']);
+});
