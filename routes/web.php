@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Modules\MasterData\MasterDataController;
+use App\Http\Controllers\Modules\MasterData\Products\ProductController;
+use App\Http\Controllers\Modules\MasterData\Users\User\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,8 +33,24 @@ Auth::routes();
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
-Route::get('master-data', [MasterDataController::class, 'index'])->name('master.data.index');
+// Masterdata routes
+Route::prefix('masterdata')->name('masterdata.')->group(function () {
+    // Main master data index route
+    Route::get('/', [MasterDataController::class, 'index'])->name('index');
+    // Products routes
+    Route::prefix('products')->name('products.')->group(function () {
+        // Product index route
+        Route::get('/', [ProductController::class, 'index'])->name('index');
+        // Standard CRUD routes for products
+        Route::resource('product', ProductController::class)->except(['destroy']);
+    });
 
-Route::middleware(['auth'])->group(function () {
-    Route::resource('masterdata/products', 'Modules\MasterData\Products\ProductController')->except(['destroy']);
-});
+    // Users routes
+    Route::prefix('users')->name('users.')->group(function () {
+        // Product index route
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        // Standard CRUD routes for products
+        Route::resource('user', UserController::class)->except(['destroy']);
+    });
+})->middleware(['auth']);
+

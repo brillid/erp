@@ -18,7 +18,9 @@
                     <td>{{ $product->name }}</td>
                     <td>
                         <a href="{{ route('masterdata.products.product.show', $product->id) }}" class="btn btn-primary">Show</a>
+                        @if(auth()->user()->can('edit-product'))
                         <a href="{{ route('masterdata.products.product.edit', $product->id) }}" class="btn btn-warning">Edit</a>
+                        @endif
                     </td>
                 </tr>
             @endforeach

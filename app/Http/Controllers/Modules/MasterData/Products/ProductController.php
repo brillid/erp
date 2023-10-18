@@ -4,8 +4,7 @@ namespace App\Http\Controllers\Modules\MasterData\Products;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\MasterData\Products\Product;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Modules\MasterData\Products\Product;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -60,7 +59,7 @@ class ProductController extends Controller
 
         Product::create($request->all());
 
-        return redirect()->route('masterdata.products.product.index')->with('success', 'Product created successfully');
+        return redirect()->route('masterdata.products.index')->with('success', 'Product created successfully');
     }
 
     public function edit($id)
@@ -97,12 +96,12 @@ class ProductController extends Controller
         if ($validator->fails()) {
             return redirect()->route('masterdata.products.product.edit', $id)
                 ->withErrors($validator)
-                . withInput();
+                -> withInput();
         }
 
         $product = Product::findOrFail($id);
         $product->update($request->all());
 
-        return redirect()->route('masterdata.products.product.index')->with('success', 'Product updated successfully');
+        return redirect()->route('masterdata.products.index')->with('success', 'Product updated successfully');
     }
 }

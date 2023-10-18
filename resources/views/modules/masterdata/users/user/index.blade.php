@@ -2,7 +2,6 @@
 
 @section('content')
     <h1>Users</h1>
-
     <table class="table">
         <thead>
             <tr>
@@ -19,9 +18,9 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
-                        <a href="{{ route('users.show', $user->id) }}" class="btn btn-info">View</a>
+                        <a href="{{ route('masterdata.users.user.show', $user->id) }}" class="btn btn-info">View</a>
                         @if(auth()->user()->can('edit-user'))
-                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ route('masterdata.users.user.edit', $user->id) }}" class="btn btn-warning">Edit</a>
                         @endif
                     </td>
                 </tr>
@@ -29,5 +28,5 @@
         </tbody>
     </table>
 
-    <a href="{{ route('users.create') }}" class="btn btn-success">Create User</a>
+    <a href="{{ route('masterdata.users.user.create') }}" class="btn btn-success">Create User</a>
 @endsection

@@ -13,5 +13,5 @@
         <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Edit</a>
     @endif
 
-    <a href="{{ route('users.index') }}" class="btn btn-primary">Back</a>
+    <a href="{{ route('masterdata.users.index') }}" class="btn btn-primary">Back</a>
 @endsection
