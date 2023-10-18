@@ -18,10 +18,8 @@
 
                     <div class="mt-4">
                         <h3>Modules:</h3>
-                        <ul>
-                            <li><a href="{{ route('masterdata.index') }}">Master Data</a></li>
+                            <a href="{{ route('masterdata.index') }}" class="btn btn-outline-primary">Master Data</a>
                             <!-- Add more module links here -->
-                        </ul>
                     </div>
                 </div>
             </div>
