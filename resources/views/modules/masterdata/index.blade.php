@@ -8,16 +8,16 @@
             <div class="card">
                 <div class="card-body">
                     <h2>Submodules:</h2>
-                    <div class="d-flex justify-content-between">
+                    <div class="bd-example">
                         <!-- Products Button -->
-                        <a href="{{ route('masterdata.products.index') }}" class="btn btn-primary">
-                            <i class="fas fa-box"></i> <!-- FontAwesome icon for Products -->
+                        <a href="{{ route('masterdata.products.index') }}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-box"></i>
                             <div>Products</div>
                         </a>
 
                         <!-- Users Button -->
-                        <a href="{{ route('masterdata.users.index') }}" class="btn btn-success">
-                            <i class="fas fa-users"></i> <!-- FontAwesome icon for Users -->
+                        <a href="{{ route('masterdata.users.index') }}" class="btn btn-success btn-lg">
+                            <i class="fas fa-users"></i>
                             <div>Users</div>
                         </a>
                     </div>
