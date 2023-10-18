@@ -8,10 +8,18 @@
             <div class="card">
                 <div class="card-body">
                     <h2>Submodules:</h2>
-                    <div class="list-group">
-                        <!-- Example submodule buttons, replace with your actual submodules -->
-                        <a href="{{ route('modules.products.index') }}" class="list-group-item list-group-item-action">Products</a>
-                        <!-- Add more submodule buttons as needed -->
+                    <div class="d-flex justify-content-between">
+                        <!-- Products Button -->
+                        <a href="{{ route('masterdata.products.index') }}" class="btn btn-primary">
+                            <i class="fas fa-box"></i> <!-- FontAwesome icon for Products -->
+                            <div>Products</div>
+                        </a>
+
+                        <!-- Users Button -->
+                        <a href="{{ route('masterdata.users.index') }}" class="btn btn-success">
+                            <i class="fas fa-users"></i> <!-- FontAwesome icon for Users -->
+                            <div>Users</div>
+                        </a>
                     </div>
                 </div>
             </div>
