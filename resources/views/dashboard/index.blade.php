@@ -19,7 +19,7 @@
                     <div class="mt-4">
                         <h3>Modules:</h3>
                             <a href="{{ route('masterdata.index') }}" class="btn btn-outline-primary">Master Data</a>
-                            <!-- Add more module links here -->
+                            <a href="{{ route('admin.index') }}" class="btn btn-outline-primary">Admin</a>
                     </div>
                 </div>
             </div>
