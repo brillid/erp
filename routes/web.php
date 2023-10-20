@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Modules\Admin\AdminController;
+use App\Http\Controllers\Modules\Admin\Roles\RoleController;
 use App\Http\Controllers\Modules\MasterData\MasterDataController;
 use App\Http\Controllers\Modules\MasterData\Products\ProductController;
 use App\Http\Controllers\Modules\MasterData\Users\User\UserController;
@@ -27,30 +29,28 @@ Route::get('/', function () {
     }
 });
 
-Route::resource('roles', RoleController::class);
-
 Auth::routes();
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
 
 // Masterdata routes
 Route::prefix('masterdata')->name('masterdata.')->group(function () {
-    // Main master data index route
     Route::get('/', [MasterDataController::class, 'index'])->name('index');
-    // Products routes
     Route::prefix('products')->name('products.')->group(function () {
-        // Product index route
         Route::get('/', [ProductController::class, 'index'])->name('index');
-        // Standard CRUD routes for products
         Route::resource('product', ProductController::class)->except(['destroy']);
     });
 
-    // Users routes
     Route::prefix('users')->name('users.')->group(function () {
-        // Product index route
         Route::get('/', [UserController::class, 'index'])->name('index');
-        // Standard CRUD routes for products
         Route::resource('user', UserController::class)->except(['destroy']);
     });
 })->middleware(['auth']);
 
+Route::prefix('admin')->name('admin.')->group(function() {
+    Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::prefix('roles')->name('roles.')->group(function() {
+        Route::get('/', [RoleController::class, 'index'])->name('index');
+        Route::resource('role', RoleController::class)->except(['destroy']);
+    });
+})->middleware(['auth']);
