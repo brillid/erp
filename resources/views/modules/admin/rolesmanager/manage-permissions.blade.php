@@ -20,7 +20,7 @@
                             </div>
                         @endif
 
-                        <form method="post" action="{{ route('roles-manager.update-permissions', $role->id) }}">
+                        <form method="post" action="{{ route('admin.roles-manager.update-permissions', $role->id) }}">
                             @csrf
                             @method('PATCH')
 

@@ -10,9 +10,3 @@
     <label for="email">Email</label>
     <input type="email" name="email" id="email" class="form-control" value="{{ isset($user) ? $user->email : '' }}">
 </div>
-
-@if(isset($user) && auth()->user()->can('edit-user'))
-    <button type="submit" class="btn btn-warning">Update User</button>
-@elseif(auth()->user()->can('create-user'))
-    <button type="submit" class="btn btn-success">Create User</button>
-@endif

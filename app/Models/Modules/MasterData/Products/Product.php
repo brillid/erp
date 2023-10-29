@@ -4,8 +4,18 @@ namespace App\Models\Modules\MasterData\Products;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Product
+ *
+ * This model represents a product in the master data.
+ */
 class Product extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
     protected $fillable = [
         'itemcode',
         'barcode',
@@ -25,7 +35,11 @@ class Product extends Model
         'service',
     ];
 
-    // Define the attributes that should be cast to native types
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string, string>
+     */
     protected $casts = [
         'active' => 'boolean',
         'material' => 'boolean',
