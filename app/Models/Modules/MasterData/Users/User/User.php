@@ -2,24 +2,28 @@
 
 namespace App\Models\Modules\MasterData\Users\User;
 
-
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Role;
+use App\Models\Modules\MasterData\Users\Roles\Role;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * Class User
+ *
+ * This model represents a user in the application.
+ */
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var array<string>
      */
     protected $fillable = [
         'username',
@@ -28,44 +32,26 @@ class User extends Authenticatable
         'password',
     ];
 
-    public function roles()
+    /**
+     * Get the roles associated with the user.
+     *
+     * @return BelongsToMany<Role>
+     */
+    public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
     }
 
-    /*
-    public function assignRoleToUser(Request $request, $userId, $roleId)
+    /**
+     * Check if the user has a role with a specific permission.
+     *
+     * @param string $permission
+     * @return bool
+     */
+    public function hasRoleWithPermission($permission)
     {
-        $user = User::find($userId);
-        $role = Role::find($roleId);
-
-        if ($user && $role) {
-            $user->roles()->attach($role);
-            // Redirect or return a response as needed
-        } else {
-            // Handle error, e.g., user or role not found
-        }
+        return $this->roles->flatMap(function (Role $role) {
+            return $role->permissions->pluck('name');
+        })->contains($permission);
     }
-
-    public function checkUserRole(Request $request, $userId, $roleId)
-    {
-        $user = User::find($userId);
-
-        if ($user && $user->hasRole($roleId)) {
-            // User has the specified role
-        } else {
-            // User does not have the specified role
-        }
-    }
-
-    public function hasRole($roleId)
-    {
-        return $this->roles->contains('id', $roleId);
-    }
-
-    public function hasPermission($permission)
-    {
-        return $this->roles->flatMap->permissions->contains('name', $permission);
-    }
-    */
 }

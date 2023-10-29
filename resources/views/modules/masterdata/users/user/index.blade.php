@@ -19,7 +19,7 @@
                     <td>{{ $user->email }}</td>
                     <td>
                         <a href="{{ route('masterdata.users.user.show', $user->id) }}" class="btn btn-info">View</a>
-                        @if(auth()->user()->can('edit-user'))
+                        @if(auth()->user()->hasRoleWithPermission('edit-user'))
                             <a href="{{ route('masterdata.users.user.edit', $user->id) }}" class="btn btn-warning">Edit</a>
                         @endif
                     </td>
@@ -29,4 +29,5 @@
     </table>
 
     <a href="{{ route('masterdata.users.user.create') }}" class="btn btn-success">Create User</a>
+    <a href="{{ route('masterdata.index') }}" class="btn btn-secondary">Back to Masterdata</a>
 @endsection

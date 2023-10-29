@@ -3,34 +3,65 @@
 namespace App\Http\Controllers\Modules\MasterData\Users\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Modules\MasterData\Users\Roles\Role;
 use Illuminate\Http\Request;
 use App\Models\Modules\MasterData\Users\User\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * Class UserController
+ *
+ * This controller handles CRUD operations for users in the Master Data module.
+ */
 class UserController extends Controller
 {
-    public function index()
+    /**
+     * Display a listing of users.
+     *
+     * @return View
+     */
+    public function index(): View
     {
         $users = User::all();
         return view('modules.masterdata.users.user.index', compact('users'));
     }
 
-    public function show($id)
+    /**
+     * Show the user's details.
+     *
+     * @param int $id
+     * @return View
+     */
+    public function show($id): View
     {
         $user = User::findOrFail($id);
         return view('modules.masterdata.users.user.show', compact('user'));
     }
 
-    public function create()
+    /**
+     * Show the form for creating a new user.
+     *
+     * @return View
+     */
+    public function create(): View
     {
-        if (!auth()->user()->can('create-user')) {
+        if (!auth()->user()->hasRoleWithPermission('create-user')) {
             abort(403, 'Unauthorized action.');
         }
 
-        return view('modules.masterdata.users.user.create');
+        $roles = Role::all();
+        return view('modules.masterdata.users.user.create', compact('roles'));
     }
 
-    public function store(Request $request)
+    /**
+     * Store a newly created user in storage.
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function store(Request $request): RedirectResponse
     {
         $validator = Validator::make($request->all(), [
             'username' => 'required|unique:users',
@@ -52,17 +83,32 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'User created successfully');
     }
 
-    public function edit($id)
+    /**
+     * Show the form for editing the specified user.
+     *
+     * @param int $id
+     * @return View
+     */
+    public function edit($id): View
     {
-        if (!auth()->user()->can('edit-user')) {
+        $user = User::findOrFail($id);
+
+        if (!$user->hasRoleWithPermission('edit-user')) {
             abort(403, 'Unauthorized action.');
         }
 
-        $user = User::findOrFail($id);
-        return view('modules.masterdata.users.user.edit', compact('user'));
+        $roles = Role::all();
+        return view('modules.masterdata.users.user.edit', compact('user', 'roles'));
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Update the specified user in storage.
+     *
+     * @param Request $request
+     * @param int $id
+     * @return RedirectResponse
+     */
+    public function update(Request $request, $id): RedirectResponse
     {
         $validator = Validator::make($request->all(), [
             'username' => 'required|unique:users,username,' . $id,
@@ -80,7 +126,11 @@ class UserController extends Controller
         }
 
         $user = User::findOrFail($id);
-        $user->update($request->all());
+        $user->update($request->except('roles'));
+
+        if ($request->has('roles')) {
+            $user->roles()->sync($request->input('roles')); // Sync selected roles
+        }
 
         return redirect()->route('users.index')->with('success', 'User updated successfully');
     }

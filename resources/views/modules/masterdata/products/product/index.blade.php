@@ -18,7 +18,7 @@
                     <td>{{ $product->name }}</td>
                     <td>
                         <a href="{{ route('masterdata.products.product.show', $product->id) }}" class="btn btn-primary">Show</a>
-                        @if(auth()->user()->can('edit-product'))
+                        @if(auth()->user()->hasRoleWithPermission('edit-product'))
                         <a href="{{ route('masterdata.products.product.edit', $product->id) }}" class="btn btn-warning">Edit</a>
                         @endif
                     </td>
@@ -27,5 +27,6 @@
         </tbody>
     </table>
     <a href="{{ route('masterdata.products.product.create') }}" class="btn btn-success">Create New Product</a>
+    <a href="{{ route('masterdata.index') }}" class="btn btn-secondary">Back to Masterdata</a>
 </div>
 @endsection

@@ -20,6 +20,12 @@
                             <i class="fas fa-users"></i>
                             <div>Users</div>
                         </a>
+
+                        <!-- Roles Button -->
+                        <a href="{{ route('masterdata.roles.index') }}" class="btn btn-success btn-lg">
+                            <i class="fas fa-users"></i>
+                            <div>Roles</div>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <h2>Submodules:</h2>
                     <div class="bd-example">
-                        <a href="{{ route('admin.roles.index') }}" class="btn btn-primary btn-lg">Roles</a>
+                        <a href="{{ route('admin.roles-manager.all-roles') }}" class="btn btn-primary btn-lg">Roles Manager</a>
                     </div>
                 </div>
             </div>

@@ -3,11 +3,21 @@
 @section('content')
     <h1>Edit User</h1>
     
-    <form action="{{ route('users.update', $user->id) }}" method="POST">
+    <form action="{{ route('masterdata.users.user.update', $user->id) }}" method="POST">
         @csrf
         @method('PATCH')
-        @include('modules.masterdata.users.users.form', ['user' => $user])
+        @include('modules.masterdata.users.user.form', ['user' => $user])
+        <div>
+        <label for="roles">Select Roles:</label>
+        @foreach ($roles as $role)
+            <div>
+                <input type="checkbox" name="roles[]" value="{{ $role->id }}" {{ $user->roles->contains($role) ? 'checked' : '' }}>
+                {{ $role->name }}
+            </div>
+        @endforeach
+    </div>
+    <button type="submit" class="btn btn-primary">Update User</button>
     </form>
 
-    <a href="{{ route('users.index') }}" class="btn btn-primary">Back</a>
+    <a href="{{ route('masterdata.users.user.index') }}" class="btn btn-secondary">Back</a>
 @endsection
