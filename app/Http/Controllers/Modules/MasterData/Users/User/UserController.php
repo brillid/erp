@@ -66,21 +66,20 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'required|unique:users',
             'name' => 'required',
-            'surname' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
+            'password' => 'required|min:3',
             // Add more validation rules as needed
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('users.create')
+            return redirect()->route('masterdata.users.user.create')
                 ->withErrors($validator)
                 ->withInput();
         }
 
         User::create($request->all());
 
-        return redirect()->route('users.index')->with('success', 'User created successfully');
+        return redirect()->route('masterdata.users.user.index')->with('success', 'User created successfully');
     }
 
     /**
@@ -113,14 +112,12 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'required|unique:users,username,' . $id,
             'name' => 'required',
-            'surname' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
-            'password' => 'nullable|min:8',
-            // Add more validation rules as needed
+            'password' => 'nullable|min:3',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('users.edit', $id)
+            return redirect()->route('masterdata.users.user.edit', $id)
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -132,6 +129,6 @@ class UserController extends Controller
             $user->roles()->sync($request->input('roles')); // Sync selected roles
         }
 
-        return redirect()->route('users.index')->with('success', 'User updated successfully');
+        return redirect()->route('masterdata.users.user.index')->with('success', 'User updated successfully');
     }
 }
