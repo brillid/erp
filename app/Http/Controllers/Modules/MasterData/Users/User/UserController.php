@@ -92,7 +92,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        if (!$user->hasRoleWithPermission('edit-user')) {
+        if (!auth()->user()->hasRoleWithPermission('edit-user')) {
             abort(403, 'Unauthorized action.');
         }
 

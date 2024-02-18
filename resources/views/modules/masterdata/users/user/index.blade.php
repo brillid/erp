@@ -8,6 +8,8 @@
                 <th>Username</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Password</th>
+                <th>Roles</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -17,11 +19,18 @@
                     <td>{{ $user->username }}</td>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
+                    <td>{{ $user->getOriginal('password') }}</td>
+                    <td>
+                        @foreach($user->roles as $role)
+                        {{ $role->name }}
+                        @if(!$loop->last)
+                            ,
+                        @endif
+                        @endforeach
+                    </td>
                     <td>
                         <a href="{{ route('masterdata.users.user.show', $user->id) }}" class="btn btn-info">View</a>
-                        @if(auth()->user()->hasRoleWithPermission('edit-user'))
-                            <a href="{{ route('masterdata.users.user.edit', $user->id) }}" class="btn btn-warning">Edit</a>
-                        @endif
+                        <a href="{{ route('masterdata.users.user.edit', $user->id) }}" class="btn btn-warning">Edit</a>
                     </td>
                 </tr>
             @endforeach
