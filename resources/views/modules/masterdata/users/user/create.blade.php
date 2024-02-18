@@ -2,11 +2,16 @@
 
 @section('content')
     <h1>Create User</h1>
-    
-    <form action="{{ route('masterdata.users.user.store') }}" method="POST">
-        @csrf
-        @include('modules.masterdata.users.user.form')
-    </form>
+
+    @if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
 
     <form action="{{ route('masterdata.users.user.store') }}" method="POST">
         @csrf

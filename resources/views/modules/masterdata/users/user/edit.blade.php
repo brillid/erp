@@ -19,5 +19,15 @@
     <button type="submit" class="btn btn-primary">Update User</button>
     </form>
 
+    @if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
     <a href="{{ route('masterdata.users.user.index') }}" class="btn btn-secondary">Back</a>
 @endsection
