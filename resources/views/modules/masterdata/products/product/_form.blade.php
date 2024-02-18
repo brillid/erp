@@ -3,12 +3,12 @@
     <label for="itemcode">Item Code</label>
     <input type="text" name="itemcode" id="itemcode" class="form-control" value="{{ old('itemcode', $product->itemcode ?? '') }}" required>
     @error('itemcode')
-    <div class="text-danger">{{ $message }}</div>
+<div class="text-danger">{{ $message }}</div>
     @enderror
+
 <div class="form-group">
     <label for="barcode">Barcode</label>
     <input type="text" name="barcode" id="barcode" class="form-control" value="{{ old('barcode', $product->barcode ?? '') }}">
-</div>
     <label for="name">Name</label>
     <input type="text" name="name" id="name" class="form-control" value="{{ old('name', $product->name ?? '') }}" required>
     @error('name')
@@ -58,14 +58,15 @@
     <input type="text" name="brand" id="brand" class="form-control" value="{{ old('brand', $product->brand ?? '') }}">
 
     <label for="active">Active</label>
-    <input type="checkbox" name="active" id="active" class="form-check-input">
-    @if(old('active', $product->active ?? false)) checked @endif
+    <input type="hidden" name="active" value="0"> <!-- Hidden input for when checkbox is unchecked -->
+    <input type="checkbox" name="active" id="active" value="1" class="form-check-input" {{ isset($product) && $product->active ? 'checked' : '' }}>
 
     <label for="material">Material</label>
-    <input type="checkbox" name="material" id="material" class="form-check-input">
-    @if(old('material', $product->material ?? false)) checked @endif
+    <input type="hidden" name="material" value="0">
+    <input type="checkbox" name="material" id="material" value="1" class="form-check-input" {{ isset($product) && $product->material ? 'checked' : '' }}>
 
     <label for="service">Service</label>
-    <input type="checkbox" name="service" id="service" class="form-check-input">
-    @if(old('service', $product->service ?? false)) checked @endif
+    <input type="hidden" name="service" value="0">
+    <input type="checkbox" name="service" id="service" value="1" class="form-check-input" {{ isset($product) && $product->service ? 'checked' : '' }}>
+
 </div>
