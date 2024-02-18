@@ -75,9 +75,9 @@ class ProductController extends Controller
             'tax_tariff' => 'required',
             'product_group' => 'nullable',
             'brand' => 'nullable',
-            'active' => 'in:on,true,false',
-            'material' => 'in:on,true,false',
-            'service' => 'in:on,true,false',
+            'active' => 'in:1,0',
+            'material' => 'in:1,0',
+            'service' => 'in:1,0',
         ]);
 
         if ($validator->fails()) {
@@ -135,9 +135,9 @@ class ProductController extends Controller
             'tax_tariff' => 'required',
             'product_group' => 'nullable',
             'brand' => 'nullable',
-            'active' => 'in:on,true,false',
-            'material' => 'in:on,true,false',
-            'service' => 'in:on,true,false',
+            'active' => 'boolean',
+            'material' => 'boolean',
+            'service' => 'boolean',
         ]);
 
         if ($validator->fails()) {
@@ -146,11 +146,10 @@ class ProductController extends Controller
                 -> withInput();
         }
 
-        $request['active'] = in_array($request->input('active'), ['on', 'true'], true);
-        $request['material'] = in_array($request->input('material'), ['on', 'true'], true);
-        $request['service'] = in_array($request->input('service'), ['on', 'true'], true);
-
         $product = Product::findOrFail($id);
+
+        var_dump($product);
+
         $product->update($request->all());
 
         return redirect()->route('masterdata.products.index')->with('success', 'Product updated successfully');
